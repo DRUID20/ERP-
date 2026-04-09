@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gasco Shift Analysis | Gasco Energy Limited</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="shift-styles.css">
+</head>
+<body>
+    <!-- Sidebar overlay (mobile) -->
+    <div class="sa-sidebar-overlay" id="sidebarOverlay" onclick="SA.closeSidebar()"></div>
+
+    <!-- Top Bar -->
+    <header class="sa-topbar">
+        <div class="sa-topbar-left">
+            <button class="sa-hamburger" id="hamburgerBtn" onclick="SA.toggleSidebar()" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+            <a href="index.html" class="sa-logo">
+                <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="sa-logo-svg">
+                    <circle cx="18" cy="18" r="17" fill="url(#gasco-grad)" stroke="#C8102E" stroke-width="1.5"/>
+                    <path d="M11 18.5 C11 14.4 14.1 11 18 11 C20.2 11 22.1 12.1 23.3 13.8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+                    <path d="M23.3 13.8 L24.5 11.5 M23.3 13.8 L21 13.2" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+                    <text x="18" y="23.5" text-anchor="middle" font-family="Arial,sans-serif" font-size="6.5" font-weight="800" fill="#fff" letter-spacing="0.5">GASCO</text>
+                    <defs><linearGradient id="gasco-grad" x1="0" y1="0" x2="36" y2="36"><stop offset="0%" stop-color="#C8102E"/><stop offset="100%" stop-color="#E8450E"/></linearGradient></defs>
+                </svg>
+                <div class="sa-logo-text">
+                    <span class="sa-logo-name">GASCO</span>
+                    <span class="sa-logo-sub">Shift Analysis</span>
+                </div>
+            </a>
+            <div class="sa-branch-selector" id="branchSelector">
+                <button class="sa-branch-btn" id="branchBtn" onclick="SA.toggleBranchDropdown()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    <span id="branchNameDisplay">Select Branch</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" class="sa-chevron"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="sa-branch-dropdown" id="branchDropdown"></div>
+            </div>
+            <div class="sa-month-selector" id="monthSelector">
+                <button class="sa-month-nav-btn" onclick="SA.prevMonth()" title="Previous Month">&#9664;</button>
+                <span id="monthDisplay">Loading...</span>
+                <button class="sa-month-nav-btn" onclick="SA.nextMonth()" title="Next Month">&#9654;</button>
+            </div>
+        </div>
+        <div class="sa-topbar-right">
+            <div class="sa-search-wrap" id="searchWrap">
+                <svg class="sa-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input class="sa-search-input" id="globalSearch" type="text" placeholder="Search... (Ctrl+K)" autocomplete="off" oninput="SA.onSearch(this.value)" onfocus="SA.onSearchFocus()" onblur="setTimeout(()=>SA.closeSearch(),200)">
+                <div class="sa-search-results" id="searchResults"></div>
+            </div>
+            <button class="sa-theme-toggle" id="themeToggle" onclick="SA.toggleTheme()" title="Toggle light/dark theme">&#9790;</button>
+            <div id="userDisplay"></div>
+            <span class="sa-version">v2.0</span>
+            <a href="index.html" class="sa-nav-link">Website</a>
+            <a href="erp.html" class="sa-nav-link">ERP Portal</a>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sa-sidebar" id="sidebar">
+        <nav class="sa-sidebar-nav">
+            <div class="sa-nav-section">
+                <div class="sa-nav-section-title">OVERVIEW</div>
+                <a href="#" class="sa-nav-item active" data-view="dashboard" onclick="SA.navigate('dashboard')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="branches" onclick="SA.navigate('branches')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>Branches</span>
+                </a>
+            </div>
+            <div class="sa-nav-section">
+                <div class="sa-nav-section-title">GASCO SHIFT ANALYSIS</div>
+                <a href="#" class="sa-nav-item" data-view="shift_entry" onclick="SA.navigate('shift_entry')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    <span>Daily Entry</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="calendar" onclick="SA.navigate('calendar')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>Calendar View</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="pump_prices" onclick="SA.navigate('pump_prices')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <span>Pump Prices</span>
+                </a>
+            </div>
+            <div class="sa-nav-section">
+                <div class="sa-nav-section-title">DIGITAL PAYMENTS</div>
+                <a href="#" class="sa-nav-item" data-view="momo" onclick="SA.navigate('momo')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                    <span>MomoPay</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="airtel" onclick="SA.navigate('airtel')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                    <span>Airtel Money</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="mpesa" onclick="SA.navigate('mpesa')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                    <span>M-Pesa</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="dollar" onclick="SA.navigate('dollar')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <span>Dollar</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="flexipay" onclick="SA.navigate('flexipay')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><path d="M6 16h4"/></svg>
+                    <span>FlexiPay</span>
+                </a>
+            </div>
+            <div class="sa-nav-section">
+                <div class="sa-nav-section-title">TRANSACTIONS</div>
+                <a href="#" class="sa-nav-item" data-view="credit_sales" onclick="SA.navigate('credit_sales')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                    <span>Credit Sales</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="expenses" onclick="SA.navigate('expenses')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <span>Expenses & Payments</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="discounts" onclick="SA.navigate('discounts')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+                    <span>Discounts</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="petty_cash" onclick="SA.navigate('petty_cash')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/><path d="M6 16h4"/></svg>
+                    <span>Petty Cash</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="goods_issues" onclick="SA.navigate('goods_issues')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                    <span>Goods Issue</span>
+                </a>
+            </div>
+            <div class="sa-nav-section">
+                <div class="sa-nav-section-title">CUSTOMERS</div>
+                <a href="#" class="sa-nav-item" data-view="customers" onclick="SA.navigate('customers')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Customer List</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="customer_statements" onclick="SA.navigate('customer_statements')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    <span>Statements</span>
+                </a>
+            </div>
+            <div class="sa-nav-section">
+                <div class="sa-nav-section-title">BANKING</div>
+                <a href="#" class="sa-nav-item" data-view="bank_statements" onclick="SA.navigate('bank_statements')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M12 2L2 7h20L12 2z"/><line x1="6" y1="11" x2="6" y2="17"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="18" y1="11" x2="18" y2="17"/></svg>
+                    <span>Bank Statements</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="cash_to_bank" onclick="SA.navigate('cash_to_bank')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/><circle cx="12" cy="12" r="10" stroke-dasharray="4 2"/></svg>
+                    <span>Cash to Bank</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="branch_transfers" onclick="SA.navigate('branch_transfers')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16l-4-4 4-4"/><path d="M3 12h18"/><path d="M17 8l4 4-4 4"/></svg>
+                    <span>Branch Transfers</span>
+                </a>
+            </div>
+            <div class="sa-nav-section">
+                <div class="sa-nav-section-title">INVENTORY</div>
+                <a href="#" class="sa-nav-item" data-view="inventory" onclick="SA.navigate('inventory')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    <span>Stock Levels</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="stock_movements" onclick="SA.navigate('stock_movements')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                    <span>Stock Movements</span>
+                </a>
+            </div>
+            <div class="sa-nav-section">
+                <div class="sa-nav-section-title">REVENUE</div>
+                <a href="#" class="sa-nav-item" data-view="revenue_collections" onclick="SA.navigate('revenue_collections')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <span>Revenue Collections</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="supplier_statement" onclick="SA.navigate('supplier_statement')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+                    <span>Supplier Statement</span>
+                </a>
+            </div>
+            <div class="sa-nav-section" id="navFuelStatement" style="display:none;">
+                <div class="sa-nav-section-title">FUEL STATEMENT</div>
+                <a href="#" class="sa-nav-item" data-view="fuel_statement" onclick="SA.navigate('fuel_statement')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+                    <span>Branch Statement</span>
+                </a>
+            </div>
+            <div class="sa-nav-section">
+                <div class="sa-nav-section-title">WETSTOCK</div>
+                <a href="#" class="sa-nav-item" data-view="wetstock" onclick="SA.navigate('wetstock')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                    <span>Reconciliation</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="deliveries" onclick="SA.navigate('deliveries')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                    <span>Delivery Schedules</span>
+                </a>
+            </div>
+            <div class="sa-nav-section">
+                <div class="sa-nav-section-title">REPORTS</div>
+                <a href="#" class="sa-nav-item" data-view="reports" onclick="SA.navigate('reports')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    <span>Reports</span>
+                </a>
+            </div>
+            <div class="sa-nav-section">
+                <div class="sa-nav-section-title">STAFF &amp; HR</div>
+                <a href="#" class="sa-nav-item" data-view="employees" onclick="SA.navigate('employees')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Employees</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="payroll" onclick="SA.navigate('payroll')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <span>Payroll</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="leave" onclick="SA.navigate('leave')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <span>Leave Management</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="loans" onclick="SA.navigate('loans')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/><circle cx="12" cy="12" r="10" stroke-dasharray="2 2"/></svg>
+                    <span>Staff Loans</span>
+                </a>
+            </div>
+            <div class="sa-nav-section" id="navAdmin" style="display:none;">
+                <div class="sa-nav-section-title">ADMIN</div>
+                <a href="#" class="sa-nav-item" data-view="user_management" onclick="SA.navigate('user_management')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    <span>User Management</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="audit_log" onclick="SA.navigate('audit_log')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    <span>Audit Log</span>
+                </a>
+                <a href="#" class="sa-nav-item" data-view="data_backup" onclick="SA.navigate('data_backup')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>Data & Backup</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="sa-main" id="mainContent">
+        <div class="sa-content" id="saContent">
+            <!-- Dynamic content rendered here by JS -->
+        </div>
+    </main>
+
+    <!-- Modal Container -->
+    <div class="sa-modal-overlay" id="modalOverlay">
+        <div class="sa-modal" id="modalContent" onclick="event.stopPropagation()">
+            <div class="sa-modal-header">
+                <h3 id="modalTitle">Modal</h3>
+                <button class="sa-modal-close" onclick="SA.closeModal()">&times;</button>
+            </div>
+            <div class="sa-modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Login Screen (shown when not authenticated) -->
+    <div id="loginScreen" class="sa-login-screen" style="display:none;">
+        <div class="sa-login-card">
+            <div class="sa-login-logo">
+                <svg viewBox="0 0 60 60" width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="30" cy="30" r="28" fill="#C8102E" stroke="#8B0000" stroke-width="2"/>
+                    <path d="M18 31 C18 24.4 23.4 19 30 19 C34.2 19 37.8 21.3 39.8 24.8" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none"/>
+                    <path d="M39.8 24.8 L42 21 M39.8 24.8 L36 23.8" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                    <text x="30" y="44" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" font-weight="800" fill="#fff" letter-spacing="1">GASCO</text>
+                </svg>
+                <h1>Gasco Energy</h1>
+                <p>Gasco Shift Analysis</p>
+            </div>
+            <div class="sa-login-form">
+                <div class="sa-form-group"><label>Username</label><input class="sa-input" id="loginUsername" placeholder="Enter username" onkeydown="if(event.key==='Enter')SA.doLogin()"></div>
+                <div class="sa-form-group"><label>Password</label><input class="sa-input" id="loginPassword" type="password" placeholder="Enter password" onkeydown="if(event.key==='Enter')SA.doLogin()"></div>
+                <button class="sa-btn sa-btn-primary sa-btn-lg" onclick="SA.doLogin()" style="width:100%;margin-top:8px;">Sign In</button>
+                <div id="loginError" style="color:var(--sa-danger);font-size:0.78rem;margin-top:8px;text-align:center;display:none;"></div>
+            </div>
+            <div class="sa-login-footer">
+                <p>Default: <strong>admin</strong> / <strong>admin123</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="sa-toast-container" id="toastContainer"></div>
+
+    <script src="shift-app.js"></script>
+</body>
+</html>

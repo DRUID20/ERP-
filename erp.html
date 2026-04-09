@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Awdeer Energy | ERP System</title>
+    <link rel="stylesheet" href="erp-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- ======================== LOGIN SCREEN ======================== -->
+    <div id="login-screen">
+        <div class="login-container">
+            <div class="login-left">
+                <div class="login-brand">
+                    <svg class="login-logo" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="40" cy="40" r="36" fill="#E8450E" opacity="0.12" stroke="#E8450E" stroke-width="2.5"/>
+                        <path d="M40 18V62" stroke="#E8450E" stroke-width="3" stroke-linecap="round"/>
+                        <path d="M28 30L40 18L52 30" stroke="#E8450E" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                        <path d="M24 42h32" stroke="#E8450E" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+                        <path d="M28 50h24" stroke="#E8450E" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+                    </svg>
+                    <h1>Awdeer Energy</h1>
+                    <p class="login-tagline">Enterprise Resource Planning System</p>
+                </div>
+                <div class="login-features">
+                    <div class="login-feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#E8450E" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                        <span>Real-time Dashboard & Analytics</span>
+                    </div>
+                    <div class="login-feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#E8450E" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                        <span>Inventory & Stock Management</span>
+                    </div>
+                    <div class="login-feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#E8450E" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+                        <span>Purchases & Landed Cost Tracking</span>
+                    </div>
+                    <div class="login-feature">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#E8450E" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        <span>GL Accounts, P&L & Balance Sheet</span>
+                    </div>
+                </div>
+                <div class="login-footer-text">
+                    <p>Awdeer Energy Limited &bull; Licensed OMC &bull; Uganda</p>
+                </div>
+            </div>
+            <div class="login-right">
+                <div class="login-form-wrapper">
+                    <h2>Sign In</h2>
+                    <p class="login-subtitle">Enter your credentials to access the ERP system</p>
+                    <form id="login-form" autocomplete="on">
+                        <div class="form-group">
+                            <label for="login-username">Username</label>
+                            <input type="text" id="login-username" name="username" placeholder="Enter username" autocomplete="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Password</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="login-password" name="password" placeholder="Enter password" autocomplete="current-password" required>
+                                <button type="button" class="password-toggle" id="password-toggle" aria-label="Show password">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="login-error" class="login-error hidden">Invalid username or password</div>
+                        <button type="submit" class="btn-login" id="login-btn">
+                            <span>Sign In</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </form>
+                    <div class="login-hint">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        <span>Default credentials: <strong>admin</strong> / <strong>awdeer2026</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================== ERP APPLICATION ======================== -->
+    <div id="app-container" class="hidden">
+        <!-- Sidebar -->
+        <aside id="sidebar">
+            <div class="sidebar-header">
+                <svg class="sidebar-logo" viewBox="0 0 40 40" fill="none">
+                    <circle cx="20" cy="20" r="17" fill="#E8450E" opacity="0.15" stroke="#E8450E" stroke-width="1.5"/>
+                    <path d="M20 10V30" stroke="#E8450E" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M14 16L20 10L26 16" stroke="#E8450E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                </svg>
+                <div class="sidebar-brand">
+                    <span class="brand-name">Awdeer ERP</span>
+                    <span class="brand-tag">Energy Management</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">MAIN</div>
+                <a href="#" class="nav-item active" data-module="dashboard">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                    <span>Dashboard</span>
+                </a>
+
+                <div class="nav-section-label">INVENTORY</div>
+                <a href="#" class="nav-item" data-module="stock_overview">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                    <span>Stock Overview</span>
+                </a>
+                <a href="#" class="nav-item" data-module="stock_movements">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                    <span>Stock Movements</span>
+                </a>
+                <a href="#" class="nav-item" data-module="branches">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <span>Branches</span>
+                </a>
+                <a href="#" class="nav-item" data-module="goods_issue">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>Goods Issue</span>
+                </a>
+
+                <div class="nav-section-label">PURCHASES</div>
+                <a href="#" class="nav-item" data-module="goods_receipt">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    <span>Goods Receipt</span>
+                </a>
+                <a href="#" class="nav-item" data-module="landed_cost">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                    <span>Landed Costs</span>
+                </a>
+                <a href="#" class="nav-item" data-module="ap_invoices">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <span>AP Invoices</span>
+                </a>
+                <a href="#" class="nav-item" data-module="suppliers">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                    <span>Suppliers</span>
+                </a>
+                <a href="#" class="nav-item" data-module="supplier_statements">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    <span>Supplier Statements</span>
+                </a>
+
+                <div class="nav-section-label">SALES</div>
+                <a href="#" class="nav-item" data-module="quotations">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    <span>Quotations</span>
+                </a>
+                <a href="#" class="nav-item" data-module="sales">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <span>Sales Invoices</span>
+                </a>
+                <a href="#" class="nav-item" data-module="customers">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    <span>Customers</span>
+                </a>
+                <a href="#" class="nav-item" data-module="receive_payment">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    <span>Receive Payment</span>
+                </a>
+                <a href="#" class="nav-item" data-module="customer_statements">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    <span>Customer Statements</span>
+                </a>
+
+                <div class="nav-section-label">FINANCE</div>
+                <a href="#" class="nav-item" data-module="accounting">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    <span>Accounting</span>
+                </a>
+                <a href="#" class="nav-item" data-module="financial_reports">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    <span>Financial Reports</span>
+                </a>
+                <a href="#" class="nav-item" data-module="exchange_rates">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    <span>Exchange Rates</span>
+                </a>
+                <a href="#" class="nav-item" data-module="reports">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    <span>Reports Hub</span>
+                </a>
+
+                <div class="nav-section-label">SYSTEM</div>
+                <a href="#" class="nav-item" onclick="event.preventDefault(); BackupRestore.backup()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    <span>Backup Data</span>
+                </a>
+                <a href="#" class="nav-item" onclick="event.preventDefault(); BackupRestore.showRestore()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <span>Restore Data</span>
+                </a>
+                <a href="#" class="nav-item" onclick="event.preventDefault(); GlobalActions.resetData()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 2v6h6M21.5 22v-6h-6"/><path d="M22 11.5A10 10 0 0 0 3.2 7.2M2 12.5a10 10 0 0 0 18.8 4.2"/></svg>
+                    <span>Reset Data</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar">A</div>
+                    <div class="user-details">
+                        <span class="user-name">Admin</span>
+                        <span class="user-role">Administrator</span>
+                    </div>
+                </div>
+                <button id="logout-btn" class="btn-logout" title="Sign Out">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main id="main-content">
+            <header id="content-header">
+                <div class="header-left">
+                    <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle sidebar">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                    </button>
+                    <div class="breadcrumb">
+                        <span id="breadcrumb-module">Dashboard</span>
+                        <span id="breadcrumb-sub" class="hidden"></span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="header-icon-btn" onclick="GlobalActions.showSearch()" title="Search (Ctrl+K)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    </button>
+                    <button class="header-icon-btn" id="dark-mode-toggle" onclick="DarkMode.toggle()" title="Toggle Dark Mode">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                    <button class="header-icon-btn" onclick="GlobalActions.printReport()" title="Print Report">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    </button>
+                    <div class="toggle-group">
+                        <label class="toggle-label">Currency:</label>
+                        <div class="toggle-buttons" id="currency-toggle">
+                            <button class="toggle-btn active" data-value="UGX">UGX</button>
+                            <button class="toggle-btn" data-value="USD">USD</button>
+                        </div>
+                    </div>
+                    <div class="toggle-group">
+                        <label class="toggle-label">Units:</label>
+                        <div class="toggle-buttons" id="unit-toggle">
+                            <button class="toggle-btn active" data-value="L">Litres</button>
+                            <button class="toggle-btn" data-value="m3">m&sup3;</button>
+                        </div>
+                    </div>
+                    <a href="index.html" class="btn-back-site" title="Back to Website">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        <span>Website</span>
+                    </a>
+                </div>
+            </header>
+
+            <div id="content-area">
+                <!-- Dynamic content rendered by JavaScript modules -->
+            </div>
+        </main>
+    </div>
+
+    <!-- ======================== MODAL OVERLAY ======================== -->
+    <div id="modal-overlay" class="hidden">
+        <div id="modal-box">
+            <div id="modal-header">
+                <h3 id="modal-title">Modal Title</h3>
+                <button id="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div id="modal-body">
+                <!-- Dynamic modal content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================== TOAST CONTAINER ======================== -->
+    <div id="toast-container"></div>
+
+    <script src="erp-app.js"></script>
+</body>
+</html>
